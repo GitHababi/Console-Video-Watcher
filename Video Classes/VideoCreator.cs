@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Diagnostics;
+
 namespace CVW
 {
     static class VideoCreator
@@ -57,20 +58,25 @@ namespace CVW
         public static Video RenderFrom(string filePath)
         {
             VideoExtractor video = new VideoExtractor(filePath);
-
             List<Frame> frameList = new List<Frame>();
             int x = Console.CursorLeft;
-            int y = Console.CursorTop;
+            int y = Console.CursorTop + 1;
+
+            Console.Write("Estimated time: " + Math.Round((decimal)(video.frameList[0].Width * video.frameList[0].Height * video.frameList.Count)/198300, 2) + " seconds.");
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+
             foreach (Bitmap bitmap in video.frameList)
             {
                 frameList.Add(new Frame(bitmap));
                 Console.SetCursorPosition(x, y);
                 Console.WriteLine(Convert.ToInt32(Math.Floor((decimal)frameList.Count / video.frameList.Count * 100)) + "% Done Rendering. Frames Rendered: " + frameList.Count);
             }
+            
             stopwatch.Stop();
             Console.WriteLine("Elapased time: " + stopwatch.ElapsedMilliseconds + "ms");
+            
             Video video1 = new Video(frameList, video.fps);
             return video1;
         }

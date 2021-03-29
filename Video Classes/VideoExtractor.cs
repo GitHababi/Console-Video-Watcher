@@ -13,6 +13,7 @@ namespace CVW
         {
             using (var vFReader = new VideoFileReader())
             {
+                
                 vFReader.Open(videoFile);
                 for (int i = 0; i < vFReader.FrameCount; i++)
                 {

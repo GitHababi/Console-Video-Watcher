@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using ConsoleExtender;
+
 namespace CVW
 {
     class Program
@@ -10,16 +12,16 @@ namespace CVW
             Console.WriteLine("Console Video Watcher v1: by Heerod Sahraei\nCopyright (C) Hababisoft Corporation, All rights reserved.");
             Console.WriteLine("\nWould you like to make a new video, or load an existing one?(Render/Load):");
             Video video = new Video(new List<Frame>(), 0);
-            switch (Console.ReadLine().ToLower())
+            switch (ConsoleHelper.Prompt().ToLower())
             {
                 case "render":
                     Console.WriteLine("NOTE: Don't use videos that have too large of a resolution(144p max/mp4 format),\nand longer videos will take more memory and time.\nInput the directory of the video you wish to render:");
-                    string input = Console.ReadLine();
+                    string input = ConsoleHelper.Prompt();
                     if (File.Exists(input))
                     {
                         video = VideoCreator.RenderFrom(input);
                         Console.WriteLine("Render Successful. Input filename to save .asciivid file into");
-                        input = Console.ReadLine();
+                        input = ConsoleHelper.Prompt();
                         try
                         {
                             VideoCreator.Save(input, video);
@@ -39,7 +41,7 @@ namespace CVW
                     break;
                 case "load":
                     Console.WriteLine("NOTE: This is used to load rendered files by this program. This cannot load video files.");
-                    string input1 = Console.ReadLine();
+                    string input1 = ConsoleHelper.Prompt();
                     if (File.Exists(input1)) { video = VideoCreator.Load(input1); PlayVideo(video); }
                     break;
                 default:

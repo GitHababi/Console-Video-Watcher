@@ -5,6 +5,15 @@ namespace ConsoleExtender
 {
     public static class ConsoleHelper
     {
+        public static string Prompt() //I wanted to make user prompts better and easier to read, so here you go.
+        {
+            string response;
+            Console.Write(">");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            response = Console.ReadLine();
+            Console.ResetColor();
+            return response;
+        }
         private const int FixedWidthTrueType = 54;
         private const int StandardOutputHandle = -11;
 
