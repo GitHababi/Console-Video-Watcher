@@ -82,7 +82,7 @@ namespace CVW.UI
                     string input2 = ConsoleHelper.Prompt("save>filename>");
                     try
                     {
-                        VideoCreator.Save(Path.Combine(input,input2,".asciivid"), vidMem);
+                        VideoCreator.Save(Path.Combine(input,input2 + ".asciivid"), vidMem);
                         Console.WriteLine("Saving Successful");
                     }
                     catch (Exception e)
