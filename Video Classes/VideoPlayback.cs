@@ -1,7 +1,7 @@
 ﻿using ConsoleExtender;
 using System;
 using System.Threading;
-namespace CVW
+namespace CVW.Ascii
 {
     class VideoPlayback
     {

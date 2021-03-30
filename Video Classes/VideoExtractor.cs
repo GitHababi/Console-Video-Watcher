@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-namespace CVW
+
+namespace CVW.Ascii
 {
     class VideoExtractor
     {
@@ -13,7 +14,7 @@ namespace CVW
         {
             using (var vFReader = new VideoFileReader())
             {
-                
+
                 vFReader.Open(videoFile);
                 for (int i = 0; i < vFReader.FrameCount; i++)
                 {

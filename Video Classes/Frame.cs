@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-namespace CVW
+namespace CVW.Ascii
 {
     [Serializable]
     public struct Frame

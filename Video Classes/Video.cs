@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CVW
+namespace CVW.Ascii
 {
     [Serializable]
     public struct Video

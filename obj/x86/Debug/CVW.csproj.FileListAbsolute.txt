@@ -47,9 +47,9 @@ D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\avdevice-57.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\avfilter-6.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\avformat-57.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\avutil-55.dll
+D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\postproc-54.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\swresample-2.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\swscale-4.dll
-D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\postproc-54.dll
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\Accord.dll.config
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\CVW.exe.config
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\CVW.exe
@@ -82,8 +82,8 @@ D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\System.Net.Http.
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\System.Net.Http.Primitives.xml
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\System.Numerics.Vectors.xml
 D:\Large Files\Repositories\Console-Video-Watcher\bin\x86\Debug\System.Runtime.CompilerServices.Unsafe.xml
-D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.csprojAssemblyReference.cache
 D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.csproj.CoreCompileInputs.cache
 D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.csproj.CopyComplete
 D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.exe
 D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.pdb
+D:\Large Files\Repositories\Console-Video-Watcher\obj\x86\Debug\CVW.csprojAssemblyReference.cache

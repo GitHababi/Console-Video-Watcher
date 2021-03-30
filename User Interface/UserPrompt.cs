@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConsoleExtender;
+using System;
 using System.IO;
-using ConsoleExtender;
-using System.Diagnostics;
+using CVW.Ascii;
 
 namespace CVW.UI
 {
     public static class UserPrompt
     {
-        private static Video vidMem;
+        public static Video vidMem;
         private static readonly Video undefinedVid;
 
         public static void Ask()
@@ -57,7 +56,7 @@ namespace CVW.UI
             if (!vidMem.Equals(undefinedVid))
             {
                 Console.WriteLine("Are you sure you want to exit? (Y/N)");
-                switch(ConsoleHelper.Prompt("exit"))
+                switch (ConsoleHelper.Prompt("exit"))
                 {
                     case "Y":
                         Environment.Exit(0);
@@ -75,16 +74,25 @@ namespace CVW.UI
         {
             if (!vidMem.Equals(undefinedVid))
             {
-                Console.WriteLine("Input the directory of the video you wish to save to:");
-                string input = ConsoleHelper.Prompt("save");
-                try
+                Console.WriteLine("Input the directory of the folder you wish to save to:");
+                string input = ConsoleHelper.Prompt("save>directory");
+                if (Directory.Exists(input))
                 {
-                    VideoCreator.Save(input, vidMem);
-                    Console.WriteLine("Saving Successful");
+                    Console.WriteLine("Input the name which you wish to name the file. It will be given the .asciivid file extension.");
+                    string input2 = ConsoleHelper.Prompt("save>filename>");
+                    try
+                    {
+                        VideoCreator.Save(Path.Combine(input,input2,".asciivid"), vidMem);
+                        Console.WriteLine("Saving Successful");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Saving Failed. " + e.Message);
+                    }
                 }
-                catch(Exception e)
+                else
                 {
-                    Console.WriteLine("Saving Failed. " + e.Message);
+                    Console.WriteLine("Saving Failed. The directory you wish to save into does not exist.");
                 }
             }
             else
@@ -121,20 +129,21 @@ namespace CVW.UI
                     vidMem = VideoCreator.RenderFrom(input);
                     Console.WriteLine("Render Successful.");
                 }
-                catch
+                catch (Exception e)
                 {
-                    Console.WriteLine("Render Failed. Ensure the file you are rendering is in the mp4 format.");
+                    if (e is ArgumentException || e is OverflowException) Console.WriteLine("Render Failed. The video you attempted to render is too large.");
+                    if (e is ArgumentOutOfRangeException) Console.WriteLine("Render Failed. Ensure that you are specifying an mp4 video file.");
                 }
             }
             else
             {
-                Console.WriteLine("Cannot render from specified directory.");
+                Console.WriteLine("Render Failed. Cannot render from specified directory.");
             }
         }
         private static void Load()
         {
             Console.WriteLine("This is used to load rendered files by this program. This cannot load video files.\nInput the directory of the video you wish to load from:");
-            string input1 = ConsoleHelper.Prompt("save");
+            string input1 = ConsoleHelper.Prompt("load");
             if (File.Exists(input1))
             {
                 try
@@ -142,14 +151,15 @@ namespace CVW.UI
                     vidMem = VideoCreator.Load(input1);
                     Console.WriteLine("Loading Successful");
                 }
-                catch
+                catch (Exception e)
                 {
-                    Console.WriteLine("Loading Failed. Ensure the file you are loading is in the asciivideo format.");
+                    if (e is System.Runtime.Serialization.SerializationException) Console.WriteLine("Loading Failed. Ensure that you are specifying a file rendered by this program.");
+                    else Console.WriteLine("Loading Failed. " + e.Message);
                 }
             }
             else
             {
-                Console.WriteLine("Cannot load from specified directory");
+                Console.WriteLine("Loading Failed. Cannot load from specified directory");
             }
         }
     }

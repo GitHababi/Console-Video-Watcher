@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Diagnostics;
 
-namespace CVW
+namespace CVW.Ascii
 {
     static class VideoCreator
     {
@@ -13,7 +13,7 @@ namespace CVW
         /// Given a video object, it will play the video into the console.
         /// </summary>
         /// <param name="video1"></param>
-        
+
         public static void PlayVideo(Video video1)
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -54,12 +54,9 @@ namespace CVW
             VidObj vidObj = new VidObj(new Video());
             FileStream fileStream = new FileStream(filePath, FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
-            
-            try
-            {
-                vidObj = (VidObj)bf.Deserialize(fileStream);
-            }
-            catch { }
+
+            vidObj = (VidObj)bf.Deserialize(fileStream);
+
             fileStream.Close();
             return vidObj.video;
         }
@@ -77,7 +74,7 @@ namespace CVW
             int x = Console.CursorLeft;
             int y = Console.CursorTop + 1;
 
-            Console.Write("Estimated time: " + Math.Round((decimal)(video.frameList[0].Width * video.frameList[0].Height * video.frameList.Count)/198300, 2) + " seconds.");
+            Console.Write("Estimated time: " + Math.Round((decimal)(video.frameList[0].Width * video.frameList[0].Height * video.frameList.Count) / 198300, 2) + " seconds.");
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -88,10 +85,10 @@ namespace CVW
                 Console.SetCursorPosition(x, y);
                 Console.WriteLine(Convert.ToInt32(Math.Floor((decimal)frameList.Count / video.frameList.Count * 100)) + "% Done Rendering. Frames Rendered: " + frameList.Count);
             }
-            
+
             stopwatch.Stop();
             Console.WriteLine("Elapased time: " + stopwatch.ElapsedMilliseconds + "ms");
-            
+
             Video video1 = new Video(frameList, video.fps);
             return video1;
         }
