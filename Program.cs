@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ConsoleExtender;
-
+using System.Diagnostics;
 namespace CVW
 {
     class Program
@@ -15,7 +15,7 @@ namespace CVW
             switch (ConsoleHelper.Prompt().ToLower())
             {
                 case "render":
-                    Console.WriteLine("NOTE: Don't use videos that have too large of a resolution(144p max/mp4 format),\nand longer videos will take more memory and time.\nInput the directory of the video you wish to render:");
+                    Console.WriteLine("NOTE: Please use upto 144p resolution and 30 fps videos\nLarger videos may take more time, and are not guaranteed to able to be played in the program.\nInput the directory of the video you wish to render:");
                     string input = ConsoleHelper.Prompt();
                     if (File.Exists(input))
                     {
@@ -51,15 +51,17 @@ namespace CVW
                     break;
             }
             Console.WriteLine("Press any key to exit the program.");
-            Console.ReadKey(); //Final Line in the program.
+            Console.ReadLine(); //Final Line in the program.
         }
         static void PlayVideo(Video video1)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             VideoPlayback videoWindow = new VideoPlayback(video1.frames[0].x, video1.frames[0].y, video1.fps);
-            foreach (Frame frame in video1.frames)
-            {
-                videoWindow.DrawFrame(frame);
-            }
+            videoWindow.PlayVideo(video1);
+            stopwatch.Stop();
+            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (stopwatch.ElapsedMilliseconds / 1000));
+            Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y);
         }
     }
 }
