@@ -9,6 +9,21 @@ namespace CVW
 {
     static class VideoCreator
     {
+        /// <summary>
+        /// Given a video object, it will play the video into the console.
+        /// </summary>
+        /// <param name="video1"></param>
+        
+        public static void PlayVideo(Video video1)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            VideoPlayback videoWindow = new VideoPlayback(video1.frames[0].x, video1.frames[0].y, video1.fps);
+            videoWindow.PlayVideo(video1);
+            stopwatch.Stop();
+            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (stopwatch.ElapsedMilliseconds / 1000));
+            Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y);
+        }
 
         /// <summary>
         /// Given a file path, and a video object, it will save to the specified file path.

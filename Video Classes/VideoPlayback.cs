@@ -33,7 +33,7 @@ namespace CVW
         {
             Console.SetCursorPosition(0, 0);
             Console.Write(frame.data);
-            Thread.Sleep(Convert.ToInt32(Math.Floor(1000 / (frameRate + frameRate * 0.3)))); //TODO: Fine tune this so that fps stays more consistent.
+            Thread.Sleep(Convert.ToInt32(Math.Floor(1000 / (frameRate + frameRate * 0.3)))); //TODO: This is dumb way of doing this but im 14.
         }
 
         /// <summary>

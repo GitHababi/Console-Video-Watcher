@@ -5,10 +5,10 @@ namespace ConsoleExtender
 {
     public static class ConsoleHelper
     {
-        public static string Prompt() //I wanted to make user prompts better and easier to read, so here you go.
+        public static string Prompt(string prompt) //I wanted to make user prompts better and easier to read, so here you go.
         {
             string response;
-            Console.Write(">");
+            Console.Write(prompt + ">");
             Console.ForegroundColor = ConsoleColor.Yellow;
             response = Console.ReadLine();
             Console.ResetColor();

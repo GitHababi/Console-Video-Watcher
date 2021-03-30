@@ -3,7 +3,7 @@ using System.Drawing;
 namespace CVW
 {
     [Serializable]
-    struct Frame
+    public struct Frame
     {
         private int dimX; //Starts from 0
         private int dimY; // Starts from 0

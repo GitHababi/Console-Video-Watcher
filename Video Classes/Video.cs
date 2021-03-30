@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CVW
 {
     [Serializable]
-    struct Video
+    public struct Video
     {
         public List<Frame> frames;
         public readonly int fps;

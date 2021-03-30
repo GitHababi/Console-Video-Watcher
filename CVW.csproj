@@ -276,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleHelper.cs" />
+    <Compile Include="User Interface\UserPrompt.cs" />
     <Compile Include="Video Classes\Frame.cs" />
     <Compile Include="Video Classes\Video.cs" />
     <Compile Include="Video Classes\VideoCreator.cs" />
