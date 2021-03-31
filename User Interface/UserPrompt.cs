@@ -79,7 +79,7 @@ namespace CVW.UI
                 if (Directory.Exists(input))
                 {
                     Console.WriteLine("Input the name which you wish to name the file. It will be given the .asciivid file extension.");
-                    string input2 = ConsoleHelper.Prompt("save>filename>");
+                    string input2 = ConsoleHelper.Prompt("save>filename");
                     try
                     {
                         VideoCreator.Save(Path.Combine(input,input2 + ".asciivid"), vidMem);
@@ -124,9 +124,26 @@ namespace CVW.UI
             string input = ConsoleHelper.Prompt("render");
             if (File.Exists(input))
             {
+                int quality = 1;
+                Console.WriteLine("Input the quality you wish to render at (Low/Med/High)");
+                switch(ConsoleHelper.Prompt("render>quality").ToLower())
+                {
+                    case "low":
+                        quality = 0;
+                        break;
+                    case "med":
+                        quality = 1;
+                        break;
+                    case "high":
+                        quality = 2;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid setting selected, choosing medium quality by default.");
+                        break;
+                }
                 try
                 {
-                    vidMem = VideoCreator.RenderFrom(input);
+                    vidMem = VideoCreator.RenderFrom(input, quality);
                     Console.WriteLine("Render Successful.");
                 }
                 catch (Exception e)

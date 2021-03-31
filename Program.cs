@@ -2,6 +2,7 @@
 using CVW.Ascii;
 using System;
 using System.IO;
+using ConsoleExtender;
 
 /// Basic map of this program's source code:
 /// The CVW.Ascii namespace contains all you'll need to create, play, and save videos.
@@ -19,16 +20,33 @@ namespace CVW
             switch (args.Length)
             {
                 case 0:
-                    Console.WriteLine("Console Video Watcher: by Heerod Sahraei\nCopyright (C) Hababisoft Corporation, All rights reserved.\nVersion 1.4A");
+                    Console.WriteLine("Console Video Watcher: by Heerod Sahraei\nCopyright (C) Hababisoft Corporation, All rights reserved.\nVersion 1.5A");
                     break;
                 case 1: //What to do when file is opened with this program.
                     if (args[0].Contains(".mp4")) //When an mp4 video is put in.
                     {
                         if (File.Exists(args[0]))
                         {
+                            int quality = 1;
+                            Console.WriteLine("Input the quality you wish to render at (Low/Med/High)");
+                            switch (ConsoleHelper.Prompt("render>quality").ToLower())
+                            {
+                                case "low":
+                                    quality = 0;
+                                    break;
+                                case "med":
+                                    quality = 1;
+                                    break;
+                                case "high":
+                                    quality = 2;
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid setting selected, choosing medium quality by default.");
+                                    break;
+                            }
                             try
                             {
-                                UserPrompt.vidMem = VideoCreator.RenderFrom(args[0]);
+                                UserPrompt.vidMem = VideoCreator.RenderFrom(args[0], quality);
                                 Console.WriteLine("Render Successful.");
                             }
                             catch (Exception e)

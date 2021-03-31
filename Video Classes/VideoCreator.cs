@@ -9,6 +9,13 @@ namespace CVW.Ascii
 {
     static class VideoCreator
     {
+        public static readonly char[] HighQuality = ".,:;iljkOXSG#&%@".ToCharArray();
+        public static readonly char[] MedQuality = ".,:i1LG@".ToCharArray();
+        public static readonly char[] LowQuality = ".iG@".ToCharArray();
+
+
+
+
         /// <summary>
         /// Given a video object, it will play the video into the console.
         /// </summary>
@@ -21,6 +28,8 @@ namespace CVW.Ascii
             VideoPlayback videoWindow = new VideoPlayback(video1.frames[0].x, video1.frames[0].y, video1.fps);
             videoWindow.PlayVideo(video1);
             stopwatch.Stop();
+            Console.Clear();
+            Console.WriteLine("Playback info: ");
             Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (stopwatch.ElapsedMilliseconds / 1000));
             Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y);
         }
@@ -67,21 +76,34 @@ namespace CVW.Ascii
         /// <param name="filePath"></param>
         /// <returns></returns>
 
-        public static Video RenderFrom(string filePath)
+        public static Video RenderFrom(string filePath, int quality)
         {
             VideoExtractor video = new VideoExtractor(filePath);
             List<Frame> frameList = new List<Frame>();
             int x = Console.CursorLeft;
             int y = Console.CursorTop + 1;
 
-            Console.Write("Estimated time: " + Math.Round((decimal)(video.frameList[0].Width * video.frameList[0].Height * video.frameList.Count) / 198300, 2) + " seconds.");
+            // This section here is dedicated to estimating the amount of time it will take to render.
+            // I don't really care if it is that inaccurate, since when has it ever?
+            
+            decimal qualityFactor = 1;
+            switch (quality)
+            {
+                case 0:
+                    qualityFactor = 0.89M;
+                    break;
+                case 2:
+                    qualityFactor = 1.123M;
+                    break;
+            }
+            Console.Write("Estimated time: " + Math.Round((decimal)(video.frameList[0].Width * video.frameList[0].Height * video.frameList.Count) / 198300 * qualityFactor, 2) + " seconds.");
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
             foreach (Bitmap bitmap in video.frameList)
             {
-                frameList.Add(new Frame(bitmap));
+                frameList.Add(new Frame(bitmap, quality));
                 Console.SetCursorPosition(x, y);
                 Console.WriteLine(Convert.ToInt32(Math.Floor((decimal)frameList.Count / video.frameList.Count * 100)) + "% Done Rendering. Frames Rendered: " + frameList.Count);
             }
