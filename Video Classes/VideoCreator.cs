@@ -23,14 +23,12 @@ namespace CVW.Ascii
 
         public static void PlayVideo(Video video1)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             VideoPlayback videoWindow = new VideoPlayback(video1.frames[0].x, video1.frames[0].y, video1.fps);
-            videoWindow.PlayVideo(video1);
-            stopwatch.Stop();
+            decimal time = videoWindow.PlayVideo(video1);
             Console.Clear();
             Console.WriteLine("Playback info: ");
-            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (stopwatch.ElapsedMilliseconds / 1000));
+            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (time / 1000) + " Attempted FPS: " + (video1.fps));
+            Console.WriteLine("Actual Frame Delay: " + videoWindow.threadDelay + " Default Frame Delay: " + 1000/video1.fps);
             Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y);
         }
 

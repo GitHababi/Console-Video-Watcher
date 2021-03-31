@@ -108,9 +108,9 @@ namespace CVW.UI
                 {
                     VideoCreator.PlayVideo(vidMem);
                 }
-                catch
+                catch(Exception e)
                 {
-                    Console.WriteLine("Playback Failed. The video you are trying to play may be corrupted.");
+                    Console.WriteLine("Playback Failed. " + e.Message);
                 }
             }
             else
