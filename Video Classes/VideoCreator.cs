@@ -24,12 +24,11 @@ namespace CVW.Ascii
         public static void PlayVideo(Video video1)
         {
             VideoPlayback videoWindow = new VideoPlayback(video1.frames[0].x, video1.frames[0].y, video1.fps);
-            decimal time = videoWindow.PlayVideo(video1);
+            double time = videoWindow.PlayVideo(video1).Result;
             Console.Clear();
             Console.WriteLine("Playback info: ");
-            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " + video1.frames.Count / (time / 1000) + " Attempted FPS: " + (video1.fps));
-            Console.WriteLine("Actual Frame Delay: " + videoWindow.threadDelay + " Default Frame Delay: " + 1000/video1.fps);
-            Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y);
+            Console.WriteLine("Expected FPS: " + video1.fps + " Actual FPS: " +  Math.Round(video1.frames.Count / (time / 10000), 3));
+            Console.WriteLine("DIMX: " + video1.frames[0].x + " DIMY: " + video1.frames[0].y + " Frame Count: " + video1.frames.Count);
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace CVW.Ascii
 
             // This section here is dedicated to estimating the amount of time it will take to render.
             // I don't really care if it is that inaccurate, since when has it ever?
-            
+
             decimal qualityFactor = 1;
             switch (quality)
             {
@@ -108,6 +107,8 @@ namespace CVW.Ascii
 
             stopwatch.Stop();
             Console.WriteLine("Elapased time: " + stopwatch.ElapsedMilliseconds + "ms");
+
+            Console.Beep();
 
             Video video1 = new Video(frameList, video.fps);
             return video1;

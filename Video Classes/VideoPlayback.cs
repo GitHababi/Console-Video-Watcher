@@ -1,6 +1,6 @@
 ﻿using ConsoleExtender;
 using System;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace CVW.Ascii
@@ -10,7 +10,6 @@ namespace CVW.Ascii
         private int screenX;
         private int screenY;
         private int frameRate; 
-        public int threadDelay;
 
         public VideoPlayback(int dimX, int dimY, int fps)
         {
@@ -35,34 +34,50 @@ namespace CVW.Ascii
         {
             Console.SetCursorPosition(0, 0);
             Console.Write(frame.data);
-            Thread.Sleep(threadDelay);
-        }       //Please someone i beg figure a better way of doing this, cause framerates are weird and flucuate due to system delays, so...
+        }
 
+        /// <summary>
+        /// Calculates the latency of the playing of the video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns>Latency between frames in Ticks</returns>
+
+        public double CalculateLatency(Video video)
+        {
+            int testFrames = Convert.ToInt32(video.frames.Count / 10);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            for (int x = 0; x < testFrames; x++)
+            {
+                DrawFrame(video.frames[x]);
+            }
+            stopwatch.Stop();
+            Console.WriteLine("Frames tested: " + testFrames + " Calculated Latency: " + (stopwatch.ElapsedTicks / (testFrames)));
+            return stopwatch.ElapsedTicks / (testFrames);
+        }
+        
         /// <summary>
         /// Plays the specified video into the console.
         /// </summary>
         /// <param name="video"></param>
-
-        public decimal PlayVideo(Video video)
+        /// <returns>Amount of time in seconds it took to play the video.</returns>
+        
+        public async Task<double> PlayVideo(Video video)
         {
             Console.Clear();
 
-            Stopwatch stopwatch = new Stopwatch(); //Determining video latency.          
-            stopwatch.Start();
-            DrawFrame(video.frames[0]);
-            DrawFrame(video.frames[1]);
-            stopwatch.Stop();
-            decimal latency = stopwatch.ElapsedTicks / 10000; //Ticks are more accurate the elapsed milliseconds.
-            threadDelay = Convert.ToInt32((1000 / frameRate) - latency); //Setting frame delay to an amount that accounts for latency.
+            TimeSpan timeSpan = (video.latency * 1.3 < 1000000/frameRate) ? new TimeSpan((long)(10000000 / frameRate - video.latency * 1.3)) : new TimeSpan(10000000 / frameRate - (long)video.latency); 
+            //Setting frame delay to an amount that accounts for latency. Isn't perfect, but does much better job than before.
 
+            Stopwatch stopwatch = new Stopwatch();
             stopwatch.Restart();
-            foreach (Frame frame in video.frames)
+            for (int x = 0;x < video.frames.Count; x++)
             {
-                DrawFrame(frame);
+                DrawFrame(video.frames[x]);
+                await Task.Delay(timeSpan);
             }
             stopwatch.Stop();
-            Console.WriteLine("Time: " + stopwatch.ElapsedMilliseconds);
-            return stopwatch.ElapsedTicks / 10000;
+            return stopwatch.ElapsedTicks / 1000;
         }
     }
 }
